@@ -21,6 +21,7 @@ interface AuthContextType {
   register: (email: string, password: string, fullName: string) => Promise<void>;
   logout: () => void;
   updateUser: (data: Partial<User>) => Promise<void>;
+  getToken: () => string | null;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -33,14 +34,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     // Check for stored token and validate
     const token = localStorage.getItem('access_token');
+    console.log('[AuthProvider] Initial token check:', token ? 'Token exists' : 'No token');
     if (token) {
       fetchUser(token);
     } else {
+      // No token - not authenticated, but stop loading
+      console.log('[AuthProvider] No token found, setting isLoading=false');
       setIsLoading(false);
     }
   }, []);
 
   const fetchUser = async (token: string) => {
+    console.log('[AuthProvider] Fetching user with token...');
     try {
       const response = await fetch(`${API_URL}/auth/me`, {
         headers: {
@@ -50,20 +55,32 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       if (response.ok) {
         const userData = await response.json();
+        console.log('[AuthProvider] User fetched successfully:', userData.email);
         setUser(userData);
-      } else {
-        // Token invalid, clear storage
+      } else if (response.status === 401) {
+        console.log('[AuthProvider] Token invalid (401), clearing storage');
+        // Token invalid or expired, clear storage silently
         localStorage.removeItem('access_token');
         localStorage.removeItem('refresh_token');
+        setUser(null);
+      } else {
+        console.log('[AuthProvider] Unexpected response status:', response.status);
       }
     } catch (error) {
-      console.error('Error fetching user:', error);
+      console.log('[AuthProvider] Error fetching user:', error);
+      // Silently handle errors - user just isn't authenticated
+      localStorage.removeItem('access_token');
+      localStorage.removeItem('refresh_token');
+      setUser(null);
     } finally {
+      // Always stop loading, even if auth fails
+      console.log('[AuthProvider] Setting isLoading=false');
       setIsLoading(false);
     }
   };
 
   const login = async (email: string, password: string) => {
+    console.log('[AuthProvider] Login attempt for:', email);
     try {
       const response = await fetch(`${API_URL}/auth/login`, {
         method: 'POST',
@@ -75,16 +92,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       if (!response.ok) {
         const error = await response.json();
+        console.log('[AuthProvider] Login failed:', error);
         throw new Error(error.detail || 'Login failed');
       }
 
       const data = await response.json();
+      console.log('[AuthProvider] Login successful, storing tokens');
       localStorage.setItem('access_token', data.access_token);
       localStorage.setItem('refresh_token', data.refresh_token);
       setUser(data.user);
-      toast.success('Welcome back!');
-      navigate('/dashboard');
+      setIsLoading(false);
+      console.log('[AuthProvider] User state set, isLoading=false');
+      return data;
     } catch (error) {
+      console.log('[AuthProvider] Login error:', error);
       toast.error(error instanceof Error ? error.message : 'Login failed');
       throw error;
     }
@@ -97,7 +118,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, password, full_name: fullName }),
+        body: JSON.stringify({ 
+          email, 
+          password, 
+          full_name: fullName 
+        }),
       });
 
       if (!response.ok) {
@@ -106,7 +131,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
 
       toast.success('Account created! Please log in.');
-      navigate('/login');
+      return true;
     } catch (error) {
       toast.error(error instanceof Error ? error.message : 'Registration failed');
       throw error;
@@ -118,7 +143,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     localStorage.removeItem('refresh_token');
     setUser(null);
     toast.info('Logged out');
-    navigate('/');
+    navigate('/login');
+  };
+
+  const getToken = () => {
+    return localStorage.getItem('access_token');
   };
 
   const updateUser = async (data: Partial<User>) => {
@@ -155,6 +184,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         register,
         logout,
         updateUser,
+        getToken,
       }}
     >
       {children}

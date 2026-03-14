@@ -4,12 +4,14 @@ CrystalFish - Main FastAPI Application
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from contextlib import asynccontextmanager
 import structlog
+import os
 
 from app.core.config import get_settings
 from app.core.database import init_db
-from app.api import auth, simulations, agents
+from app.api import auth, simulations, agents, api_test
 
 # Configure logging
 structlog.configure(
@@ -71,12 +73,20 @@ def create_application() -> FastAPI:
     app.include_router(auth.router, prefix="/api/v1")
     app.include_router(simulations.router, prefix="/api/v1")
     app.include_router(agents.router, prefix="/api/v1")
+    app.include_router(api_test.router)  # API Test Dashboard
     
     # Health check
     @app.get("/health")
     async def health_check():
         return {"status": "healthy", "version": settings.APP_VERSION}
-    
+
+    # API Test Dashboard (HTML UI)
+    @app.get("/api-test/dashboard/ui")
+    async def api_test_dashboard_ui():
+        """Serve the API Test Dashboard HTML UI"""
+        dashboard_path = os.path.join(os.path.dirname(__file__), "api", "api_test_dashboard.html")
+        return FileResponse(dashboard_path)
+
     # Root
     @app.get("/")
     async def root():

@@ -25,8 +25,7 @@ services:
   redis:
     image: redis:7-alpine
     container_name: crystalfish-redis
-    ports:
-      - "6379:6379"
+    # Port mapping removed - Redis is accessible internally by other containers
     volumes:
       - redis_data:/data
     healthcheck:
@@ -126,10 +125,25 @@ services:
   frontend:
     build:
       context: ./frontend
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
     container_name: crystalfish-frontend
+    environment:
+      - VITE_API_URL=http://localhost:8000/api/v1
     ports:
-      - "5173:80"
+      - "5173:5173"
+    volumes:
+      - ./frontend/src:/app/src
+      - ./frontend/public:/app/public
+      - ./frontend/index.html:/app/index.html
+      - ./frontend/vite.config.ts:/app/vite.config.ts
+      - ./frontend/tsconfig.json:/app/tsconfig.json
+      - ./frontend/tsconfig.app.json:/app/tsconfig.app.json
+      - ./frontend/package.json:/app/package.json
+      - ./frontend/package-lock.json:/app/package-lock.json
+      - ./frontend/tailwind.config.js:/app/tailwind.config.js
+      - ./frontend/postcss.config.js:/app/postcss.config.js
+      - ./frontend/components.json:/app/components.json
+      - /app/node_modules
     depends_on:
       - backend
     networks:

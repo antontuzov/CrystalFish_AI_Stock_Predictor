@@ -79,7 +79,12 @@ export default function SimulationCreatePage() {
 
     try {
       const token = localStorage.getItem('access_token');
-      
+      if (!token) {
+        toast.error('Please log in to create a simulation');
+        navigate('/login');
+        return;
+      }
+
       // Normalize distribution to ensure it sums to 100
       const normalizedDist: { [key: string]: number } = {};
       Object.entries(personalityDist).forEach(([key, value]) => {
@@ -105,6 +110,14 @@ export default function SimulationCreatePage() {
       });
 
       if (!response.ok) {
+        if (response.status === 401) {
+          // Token expired
+          localStorage.removeItem('access_token');
+          localStorage.removeItem('refresh_token');
+          toast.error('Session expired. Please log in again.');
+          navigate('/login');
+          return;
+        }
         const error = await response.json();
         throw new Error(error.detail || 'Failed to create simulation');
       }

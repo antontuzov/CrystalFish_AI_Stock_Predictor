@@ -31,12 +31,25 @@ interface Simulation {
 
 const fetchSimulations = async (): Promise<Simulation[]> => {
   const token = localStorage.getItem('access_token');
+  if (!token) {
+    // No token - redirect to login will be handled by ProtectedRoute
+    throw new Error('Not authenticated');
+  }
   const response = await fetch(`${API_URL}/simulations`, {
     headers: {
       'Authorization': `Bearer ${token}`,
     },
   });
-  if (!response.ok) throw new Error('Failed to fetch simulations');
+  if (!response.ok) {
+    if (response.status === 401) {
+      // Token expired, clear storage
+      localStorage.removeItem('access_token');
+      localStorage.removeItem('refresh_token');
+      window.location.href = '/login';
+      throw new Error('Session expired');
+    }
+    throw new Error('Failed to fetch simulations');
+  }
   return response.json();
 };
 

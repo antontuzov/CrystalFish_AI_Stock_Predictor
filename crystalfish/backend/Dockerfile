@@ -18,6 +18,8 @@ RUN apt-get update && apt-get install -y \
 
 # Install Python dependencies
 COPY requirements.txt .
+RUN pip install --no-cache-dir --upgrade pip
+RUN pip install --no-cache-dir bcrypt==4.0.1
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy project

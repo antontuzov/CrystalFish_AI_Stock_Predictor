@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import { useAuth } from '@/hooks/use-auth';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -19,15 +18,21 @@ export default function RegisterPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (password !== confirmPassword) {
       return;
     }
-    
+
+    if (password.length < 8) {
+      return;
+    }
+
     setIsLoading(true);
     try {
       await register(email, password, fullName);
       setIsSuccess(true);
+    } catch (error) {
+      console.error('Registration error:', error);
     } finally {
       setIsLoading(false);
     }
@@ -37,12 +42,8 @@ export default function RegisterPage() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-[#0088CC]/5 via-background to-[#00A3FF]/5" />
-        
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="relative z-10 w-full max-w-md px-4"
-        >
+
+        <div className="relative z-10 w-full max-w-md px-4">
           <Card className="border-border/50 shadow-xl text-center p-8">
             <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
             <CardTitle className="text-2xl mb-2">Account Created!</CardTitle>
@@ -55,7 +56,7 @@ export default function RegisterPage() {
               </Button>
             </Link>
           </Card>
-        </motion.div>
+        </div>
       </div>
     );
   }
@@ -64,20 +65,8 @@ export default function RegisterPage() {
     <div className="min-h-screen flex items-center justify-center bg-background relative overflow-hidden py-8">
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#0088CC]/5 via-background to-[#00A3FF]/5" />
-      
-      {/* Animated orbs */}
-      <motion.div
-        animate={{ scale: [1, 1.2, 1], opacity: [0.2, 0.3, 0.2] }}
-        transition={{ duration: 8, repeat: Infinity }}
-        className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#0088CC]/10 rounded-full blur-3xl"
-      />
 
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="relative z-10 w-full max-w-md px-4"
-      >
+      <div className="relative z-10 w-full max-w-md px-4">
         {/* Logo */}
         <div className="flex justify-center mb-8">
           <Link to="/" className="flex items-center gap-2">
@@ -179,7 +168,7 @@ export default function RegisterPage() {
             ← Back to home
           </Link>
         </p>
-      </motion.div>
+      </div>
     </div>
   );
 }

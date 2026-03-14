@@ -30,14 +30,14 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider defaultTheme="dark" storageKey="crystalfish-theme">
-        <AuthProvider>
-          <Router>
+        <Router>
+          <AuthProvider>
             <Routes>
               {/* Public routes */}
               <Route path="/" element={<LandingPage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
-              
+
               {/* Protected routes */}
               <Route element={<ProtectedRoute />}>
                 <Route element={<MainLayout />}>
@@ -47,13 +47,13 @@ function App() {
                   <Route path="/profile" element={<ProfilePage />} />
                 </Route>
               </Route>
-              
+
               {/* Fallback */}
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
-          </Router>
+          </AuthProvider>
           <Toaster position="top-right" richColors />
-        </AuthProvider>
+        </Router>
       </ThemeProvider>
     </QueryClientProvider>
   );

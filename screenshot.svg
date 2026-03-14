@@ -1,0 +1,139 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a1a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a1a3a;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="cardGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a3a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2a2a5a;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accentGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00d4ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7b2fff;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="800" fill="url(#bgGradient)"/>
+  
+  <!-- Header -->
+  <rect x="0" y="0" width="1200" height="60" fill="#0f0f2a" opacity="0.8"/>
+  <text x="30" y="40" font-family="Arial" font-size="24" fill="#00d4ff" font-weight="bold">CrystalFish</text>
+  <text x="1100" y="40" font-family="Arial" font-size="14" fill="#8888aa">Dashboard</text>
+  
+  <!-- Sidebar -->
+  <rect x="0" y="60" width="200" height="740" fill="#0f0f2a" opacity="0.6"/>
+  <rect x="20" y="100" width="160" height="40" fill="url(#accentGradient)" opacity="0.2" rx="8"/>
+  <text x="40" y="125" font-family="Arial" font-size="14" fill="#00d4ff">📊 Dashboard</text>
+  <rect x="20" y="150" width="160" height="40" fill="transparent" rx="8"/>
+  <text x="40" y="175" font-family="Arial" font-size="14" fill="#8888aa">🔬 Simulations</text>
+  <rect x="20" y="200" width="160" height="40" fill="transparent" rx="8"/>
+  <text x="40" y="225" font-family="Arial" font-size="14" fill="#8888aa">🤖 Agents</text>
+  <rect x="20" y="250" width="160" height="40" fill="transparent" rx="8"/>
+  <text x="40" y="275" font-family="Arial" font-size="14" fill="#8888aa">📈 Analytics</text>
+  
+  <!-- Main Content Area -->
+  <rect x="220" y="80" width="960" height="700" fill="url(#cardGradient)" opacity="0.5" rx="12"/>
+  
+  <!-- Title -->
+  <text x="260" y="130" font-family="Arial" font-size="28" fill="#ffffff" font-weight="bold">AI Swarm Simulation</text>
+  <text x="260" y="155" font-family="Arial" font-size="14" fill="#8888aa">Real-time prediction engine with 100 AI agents</text>
+  
+  <!-- Stats Cards -->
+  <rect x="260" y="180" width="200" height="100" fill="#1a1a3a" rx="8" opacity="0.8"/>
+  <text x="280" y="210" font-family="Arial" font-size="12" fill="#8888aa">Performance Score</text>
+  <text x="280" y="250" font-family="Arial" font-size="36" fill="#00d4ff" font-weight="bold">85/100</text>
+  
+  <rect x="480" y="180" width="200" height="100" fill="#1a1a3a" rx="8" opacity="0.8"/>
+  <text x="500" y="210" font-family="Arial" font-size="12" fill="#8888aa">Success Rate</text>
+  <text x="500" y="250" font-family="Arial" font-size="36" fill="#7b2fff" font-weight="bold">100%</text>
+  
+  <rect x="700" y="180" width="200" height="100" fill="#1a1a3a" rx="8" opacity="0.8"/>
+  <text x="720" y="210" font-family="Arial" font-size="12" fill="#8888aa">Avg Response</text>
+  <text x="720" y="250" font-family="Arial" font-size="36" fill="#ff00aa" font-weight="bold">547ms</text>
+  
+  <rect x="920" y="180" width="200" height="100" fill="#1a1a3a" rx="8" opacity="0.8"/>
+  <text x="940" y="210" font-family="Arial" font-size="12" fill="#8888aa">Active Agents</text>
+  <text x="940" y="250" font-family="Arial" font-size="36" fill="#00ffff" font-weight="bold">100</text>
+  
+  <!-- Chart Area -->
+  <rect x="260" y="300" width="560" height="300" fill="#1a1a3a" rx="8" opacity="0.6"/>
+  <text x="280" y="330" font-family="Arial" font-size="16" fill="#ffffff" font-weight="bold">Price Prediction Trend</text>
+  
+  <!-- Chart grid lines -->
+  <line x1="280" y1="360" x2="800" y2="360" stroke="#3a3a5a" stroke-width="1"/>
+  <line x1="280" y1="410" x2="800" y2="410" stroke="#3a3a5a" stroke-width="1"/>
+  <line x1="280" y1="460" x2="800" y2="460" stroke="#3a3a5a" stroke-width="1"/>
+  <line x1="280" y1="510" x2="800" y2="510" stroke="#3a3a5a" stroke-width="1"/>
+  <line x1="280" y1="560" x2="800" y2="560" stroke="#3a3a5a" stroke-width="1"/>
+  
+  <!-- Chart line (simulated prediction) -->
+  <polyline points="280,500 350,480 420,450 490,420 560,380 630,350 700,320 770,300" 
+            fill="none" stroke="url(#accentGradient)" stroke-width="3"/>
+  
+  <!-- Chart points -->
+  <circle cx="280" cy="500" r="5" fill="#00d4ff"/>
+  <circle cx="420" cy="450" r="5" fill="#7b2fff"/>
+  <circle cx="560" cy="380" r="5" fill="#ff00aa"/>
+  <circle cx="700" cy="320" r="5" fill="#00ffff"/>
+  <circle cx="770" cy="300" r="5" fill="#00d4ff"/>
+  
+  <!-- Agent Swarm Visualization -->
+  <rect x="840" y="300" width="320" height="300" fill="#1a1a3a" rx="8" opacity="0.6"/>
+  <text x="860" y="330" font-family="Arial" font-size="16" fill="#ffffff" font-weight="bold">Agent Swarm</text>
+  
+  <!-- Agent dots -->
+  <circle cx="880" cy="370" r="8" fill="#00d4ff" opacity="0.8"/>
+  <circle cx="920" cy="380" r="8" fill="#7b2fff" opacity="0.8"/>
+  <circle cx="960" cy="360" r="8" fill="#ff00aa" opacity="0.8"/>
+  <circle cx="1000" cy="380" r="8" fill="#00ffff" opacity="0.8"/>
+  <circle cx="1040" cy="370" r="8" fill="#00d4ff" opacity="0.8"/>
+  <circle cx="1080" cy="390" r="8" fill="#7b2fff" opacity="0.8"/>
+  
+  <circle cx="890" cy="430" r="8" fill="#7b2fff" opacity="0.8"/>
+  <circle cx="930" cy="440" r="8" fill="#ff00aa" opacity="0.8"/>
+  <circle cx="970" cy="420" r="8" fill="#00d4ff" opacity="0.8"/>
+  <circle cx="1010" cy="440" r="8" fill="#7b2fff" opacity="0.8"/>
+  <circle cx="1050" cy="430" r="8" fill="#ff00aa" opacity="0.8"/>
+  <circle cx="1090" cy="450" r="8" fill="#00ffff" opacity="0.8"/>
+  
+  <circle cx="900" cy="490" r="8" fill="#ff00aa" opacity="0.8"/>
+  <circle cx="940" cy="500" r="8" fill="#00d4ff" opacity="0.8"/>
+  <circle cx="980" cy="480" r="8" fill="#7b2fff" opacity="0.8"/>
+  <circle cx="1020" cy="500" r="8" fill="#ff00aa" opacity="0.8"/>
+  <circle cx="1060" cy="490" r="8" fill="#00d4ff" opacity="0.8"/>
+  <circle cx="1100" cy="510" r="8" fill="#7b2fff" opacity="0.8"/>
+  
+  <!-- Connection lines between agents -->
+  <line x1="880" y1="370" x2="920" y2="380" stroke="#3a3a5a" stroke-width="1"/>
+  <line x1="920" y1="380" x2="960" y2="360" stroke="#3a3a5a" stroke-width="1"/>
+  <line x1="960" y1="360" x2="1000" y2="380" stroke="#3a3a5a" stroke-width="1"/>
+  <line x1="930" y1="440" x2="970" y2="420" stroke="#3a3a5a" stroke-width="1"/>
+  <line x1="940" y1="500" x2="980" y2="480" stroke="#3a3a5a" stroke-width="1"/>
+  
+  <!-- Bottom Stats -->
+  <rect x="260" y="620" width="440" height="140" fill="#1a1a3a" rx="8" opacity="0.6"/>
+  <text x="280" y="650" font-family="Arial" font-size="16" fill="#ffffff" font-weight="bold">API Test Dashboard</text>
+  
+  <rect x="280" y="670" width="180" height="60" fill="#0f0f2a" rx="6"/>
+  <text x="295" y="695" font-family="Arial" font-size="12" fill="#8888aa">Health Status</text>
+  <text x="295" y="715" font-family="Arial" font-size="18" fill="#00ff88" font-weight="bold">✓ Healthy</text>
+  
+  <rect x="480" y="670" width="180" height="60" fill="#0f0f2a" rx="6"/>
+  <text x="495" y="695" font-family="Arial" font-size="12" fill="#8888aa">Endpoints Tested</text>
+  <text x="495" y="715" font-family="Arial" font-size="18" fill="#00d4ff" font-weight="bold">5/5 Passed</text>
+  
+  <!-- Agent Chat -->
+  <rect x="720" y="620" width="440" height="140" fill="#1a1a3a" rx="8" opacity="0.6"/>
+  <text x="740" y="650" font-family="Arial" font-size="16" fill="#ffffff" font-weight="bold">Chat with API Guardian</text>
+  <rect x="740" y="670" width="380" height="30" fill="#0f0f2a" rx="6"/>
+  <text x="750" y="690" font-family="Arial" font-size="12" fill="#666688">Ask about API performance...</text>
+  <circle cx="1140" cy="685" r="12" fill="url(#accentGradient)"/>
+  <text x="1140" y="690" font-family="Arial" font-size="14" fill="#ffffff" text-anchor="middle">➤</text>
+  
+  <!-- Footer -->
+  <rect x="0" y="760" width="1200" height="40" fill="#0a0a1a" opacity="0.8"/>
+  <text x="30" y="785" font-family="Arial" font-size="12" fill="#666688">CrystalFish v1.0.0 - AI Swarm Intelligence for Stock/Crypto Prediction</text>
+  <text x="1100" y="785" font-family="Arial" font-size="12" fill="#666688">Last updated: 2026-03-14</text>
+</svg>
